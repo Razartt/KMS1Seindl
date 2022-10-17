@@ -1,0 +1,44 @@
+﻿<Window x:Class="KMS1Seindl.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Seindl KMS Window" Height="250" Width="350" FontSize="15" WindowStartupLocation="CenterScreen">
+    <Border BorderBrush="AntiqueWhite" BorderThickness="5">
+    <Grid>
+        <!--Sets the Grid for our Window-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <!--A Border Around to make it look better-->
+        <Border Grid.Row="1" Grid.Column="1" BorderBrush="AntiqueWhite" BorderThickness="5" Width="auto" Height="auto">
+            <!---StackPanel gives it a cleaner look-->
+            <StackPanel Orientation="Vertical">
+                <!---Button for Selecting the KMS file-->
+                <Button ToolTip="Selecting a big file may take some time to process" BorderBrush="Black" BorderThickness="2" Background="AntiqueWhite" Click="btnSelectTxtFile_Click" Name="btnSelectTxtFile" Content="Select your KMS File"/>
+                <!---The Cancel Button gives the possibility to stop the Operation, afer you pick the file you want to bo processed-->
+                <Button ToolTip="Let you cancel the process!" BorderBrush="Black" BorderThickness="2" Background="AntiqueWhite" Name="btnCancel" Content="Cancel" Visibility="Collapsed" Click="btnCancel_Click"/>
+                <!---Shows how far the process is-->
+                <ProgressBar Foreground="LawnGreen" Background="AntiqueWhite" Name="pbProgress" Height="10" Width="auto"/>
+                <!---Shows the selected file-->
+                <Label Name="lbTxtFileName" HorizontalContentAlignment="Center"/>
+                <!---Count of the lines created by the operation-->
+                <Label Name="lbLines" Width="auto" HorizontalContentAlignment="Center" BorderBrush="AntiqueWhite"/>
+                <!---After successfully processing the file, the button get's availabel-->
+                <Button IsEnabled="False" BorderBrush="Black" BorderThickness="2" Background="AntiqueWhite" Click="btnSaveTxtFile_Click" Name="btnSaveTxtFile" Content="Save your KMS File"/>
+                <!---Shows if the files is succesfully been created-->
+                <TextBlock Name="tbSavedTo" TextWrapping="Wrap"/>
+            </StackPanel>
+        </Border>
+
+    </Grid>
+    </Border>
+</Window>
