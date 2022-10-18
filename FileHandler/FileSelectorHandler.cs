@@ -13,7 +13,6 @@ namespace KMS1Seindl.FileHandler
         /// </summary>
         public static string TextFileSelector(MainWindow main)
         {
-            Resetter(main);
             OpenFileDialog openTxt = new OpenFileDialog();
             openTxt.Filter = "KMS File(*.txt)|*.txt";
             if(openTxt.ShowDialog() == true)
@@ -25,6 +24,7 @@ namespace KMS1Seindl.FileHandler
             }
             return "ERROR";
         }
+
         /// <summary>
         /// Set's the Label in the Main Window to show the File name you opened!
         /// </summary>
@@ -39,28 +39,6 @@ namespace KMS1Seindl.FileHandler
             {
                 main.lbTxtFileName.Background = new SolidColorBrush(Colors.LightGreen);
             }
-        }
-
-        /// <summary>
-        /// Resets every visual indicators on the MainWindow
-        /// </summary>
-        /// <param name="main"></param>
-        private static void Resetter(MainWindow main)
-        {
-            try
-            {
-                main.lbLines.Content = "";
-                main.lbTxtFileName.Content = "";
-                main.lbTxtFileName.Background = new SolidColorBrush(Colors.White);
-                main.tbSavedTo.Text = "";
-                main.tbSavedTo.Background = new SolidColorBrush(Colors.White);
-                main.pbProgress.Value = 0;
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
         }
     }
 }

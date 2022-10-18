@@ -4,41 +4,113 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Seindl KMS Window" Height="250" Width="350" FontSize="15" WindowStartupLocation="CenterScreen">
+        Title="KMS Window" Height="228" Width="565" FontSize="15" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Border BorderBrush="AntiqueWhite" BorderThickness="5">
-    <Grid>
-        <!--Sets the Grid for our Window-->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20"/>
+        <Grid>
+            <!--Sets the Grid for our Window-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="20"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="20"/>
-        </Grid.RowDefinitions>
-        <!--A Border Around to make it look better-->
-        <Border Grid.Row="1" Grid.Column="1" BorderBrush="AntiqueWhite" BorderThickness="5" Width="auto" Height="auto">
-            <!---StackPanel gives it a cleaner look-->
-            <StackPanel Orientation="Vertical">
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1">
+                <StackPanel Orientation="Horizontal">
+                <!--A Border Around to make it look better-->
+                    <Border BorderBrush="AntiqueWhite" BorderThickness="5" Width="250">
+                <!---StackPanel gives it a cleaner look-->
+                        <StackPanel Orientation="Vertical">
                 <!---Button for Selecting the KMS file-->
-                <Button ToolTip="Selecting a big file may take some time to process" BorderBrush="Black" BorderThickness="2" Background="AntiqueWhite" Click="btnSelectTxtFile_Click" Name="btnSelectTxtFile" Content="Select your KMS File"/>
-                <!---The Cancel Button gives the possibility to stop the Operation, afer you pick the file you want to bo processed-->
-                <Button ToolTip="Let you cancel the process!" BorderBrush="Black" BorderThickness="2" Background="AntiqueWhite" Name="btnCancel" Content="Cancel" Visibility="Collapsed" Click="btnCancel_Click"/>
-                <!---Shows how far the process is-->
-                <ProgressBar Foreground="LawnGreen" Background="AntiqueWhite" Name="pbProgress" Height="10" Width="auto"/>
+                            <Button ToolTip="Selecting a big file may take some time to process"
+                                    BorderBrush="Black"
+                                    BorderThickness="2"
+                                    Background="AntiqueWhite"
+                                    Click="btnSelectTxtFile_Click"
+                                    Name="btnSelectTxtFile"
+                                    Content="Open"
+                           />
                 <!---Shows the selected file-->
-                <Label Name="lbTxtFileName" HorizontalContentAlignment="Center"/>
+                            <Label Name="lbTxtFileName"
+                                   HorizontalContentAlignment="Center"
+                                   Height="30"
+                           />
                 <!---Count of the lines created by the operation-->
-                <Label Name="lbLines" Width="auto" HorizontalContentAlignment="Center" BorderBrush="AntiqueWhite"/>
-                <!---After successfully processing the file, the button get's availabel-->
-                <Button IsEnabled="False" BorderBrush="Black" BorderThickness="2" Background="AntiqueWhite" Click="btnSaveTxtFile_Click" Name="btnSaveTxtFile" Content="Save your KMS File"/>
+                            <Label Name="lbLines"
+                                   Width="auto"
+                                   HorizontalContentAlignment="Center"
+                                   BorderBrush="AntiqueWhite"
+                           />
+                <!---Shows how far the process is-->
+                            <ProgressBar Foreground="LawnGreen"
+                                         Background="AntiqueWhite"
+                                         Name="pbEditProgress"
+                                         Height="15"
+                                         Width="auto"
+                           />
+                <!---The Cancel Button gives the possibility to stop the Operation,
+                            afer you pick the file you want to bo processed-->
+                            <Button ToolTip="Stops the process!"
+                                    BorderBrush="Black"
+                                    BorderThickness="2"
+                                    Background="AntiqueWhite"
+                                    Name="btnCancel"
+                                    Content="Cancel"
+                                    Visibility="Collapsed"
+                                    Click="btnCancel_Click"
+                           />
+                        </StackPanel>
+                    </Border>
+                    <Rectangle Fill="Black" Width="1"/>
+                    <Border BorderBrush="AntiqueWhite" BorderThickness="5" Width="250">
+                <!---StackPanel for the right hand side-->
+                        <StackPanel Orientation="Vertical">
+                <!---After successfully processing the file,
+                            the button get's availabel-->
+                            <Button IsEnabled="False"
+                                    ToolTip="Select the destination for your file to save into!"
+                                    BorderBrush="Black"
+                                    BorderThickness="2"
+                                    Background="AntiqueWhite"
+                                    Click="btnSaveTxtFile_Click"
+                                    Name="btnSaveTxtFile"
+                                    Content="Save"
+                           />
                 <!---Shows if the files is succesfully been created-->
-                <TextBlock Name="tbSavedTo" TextWrapping="Wrap"/>
-            </StackPanel>
-        </Border>
-
-    </Grid>
+                            <TextBlock TextAlignment="Center"
+                                       Name="tbSavedTo"
+                                       TextWrapping="Wrap"
+                                       Height="30"
+                           />
+                <!---Shows the progress of the saving operation-->
+                            <Label Name="lbSaveProgress"
+                                   HorizontalContentAlignment="Center"
+                           />
+                <!---Shows how far the process is-->
+                            <ProgressBar Foreground="LawnGreen"
+                                         Background="AntiqueWhite"
+                                         Name="pbSaveProgress"
+                                         Height="15"
+                                         Width="auto"
+                           />
+                <!---On Click opens the new file-->
+                            <Button ToolTip="Open your new file"
+                                    BorderBrush="Black"
+                                    BorderThickness="2"
+                                    Background="AntiqueWhite"
+                                    Name="btnOpenSavedFile"
+                                    Visibility="Collapsed"
+                                    Click="btnOpenSavedFile_Click"
+                           />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+        </Grid>
     </Border>
 </Window>

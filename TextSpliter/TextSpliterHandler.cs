@@ -14,7 +14,7 @@ namespace KMS1Seindl.TextSpliter
     /// </summary>
     static public class TextSpliterHandler
     {
-        static public ProgressBar ProgressBarMW { get; set; }
+        static public ProgressBar ProgressBarEditTxt { get; set; }
         static public Label ProgressLabel { get; set; }
 
         /// <summary>
@@ -38,27 +38,28 @@ namespace KMS1Seindl.TextSpliter
         /// <param name="e"></param>
         private static void UpdateProgressBar(object sender, ProgressModel e)
         {
-            ProgressBarMW.Value = e.Progress;
+            ProgressBarEditTxt.Value = e.Progress;
             ProgressLabel.Content = e.AddedParts.ToString();
         }
 
 
         /// <summary>
-        /// Cycles through the text string and splits it into ending- and starting- strings,+ adds it to the List response to the Cancel Button
+        /// Cycles through the text string and splits it into ending- and starting- strings,+ adds it to the List, response to the Cancel Button
         /// </summary>
         /// <param name="text"></param>
         /// <param name="progress"></param>
         /// <param name="canceltoken"></param>
-        /// <returns></returns>
+        /// <returns>
+        /// A List of Type TextPartModel
+        /// </returns>
         static private async Task<List<TextPartModel>> TextSplitAsync(string text, IProgress<ProgressModel> progress, CancellationToken canceltoken)
         {
             List<TextPartModel> textParts = new List<TextPartModel>();
             ProgressModel update = new ProgressModel();
             text = await Task.Run(()=>ReplaceParts(text));
-            int temp = 0, lines = 1796304, cycles = 0;
+            int temp = 0, lines = 1796304, cycles = 0, progressPercent = 1;
             string tempstr = null;
-            int progressPercent = 1;
-            //var result = await Task.Run(() => )
+
             foreach (var part in text.Split(';', ' '))
             {
                 if (part.Contains("SZ") && !part.Contains("EDV"))
@@ -73,19 +74,38 @@ namespace KMS1Seindl.TextSpliter
                     cycles++;
                     if ((lines/100) == cycles)
                     {
-                        update.Progress = progressPercent++;
-                        update.AddedParts = $"Lines Created: {textParts.Count}";
-                        progress.Report(update);
-                        cycles = 0;
-                        canceltoken.ThrowIfCancellationRequested();
+                        if(textParts.Count % 3 == 0)
+                        {
+                            update.Progress = progressPercent++;
+                            update.AddedParts = $"Lines processed: {textParts.Count}.";
+                            progress.Report(update);
+                            cycles = 0;
+                            canceltoken.ThrowIfCancellationRequested();
+                        }
+                        if (textParts.Count % 3 == 1)
+                        {
+                            update.Progress = progressPercent++;
+                            update.AddedParts = $"Lines processed: {textParts.Count}..";
+                            progress.Report(update);
+                            cycles = 0;
+                            canceltoken.ThrowIfCancellationRequested();
+                        }
+                        if (textParts.Count % 3 == 2)
+                        {
+                            update.Progress = progressPercent++;
+                            update.AddedParts = $"Lines processed: {textParts.Count}...";
+                            progress.Report(update);
+                            cycles = 0;
+                            canceltoken.ThrowIfCancellationRequested();
+                        }
                     }
 
                 }
             }
-            if(update.Progress < 100)
+            if(update.Progress <= 100)
             {
                 update.Progress = 100;
-                update.AddedParts = $"Lines Created: {textParts.Count}";
+                update.AddedParts = $"All {textParts.Count} Lines done.";
                 progress.Report(update);
             }
             return textParts;
@@ -93,14 +113,16 @@ namespace KMS1Seindl.TextSpliter
 
 
         /// <summary>
-        /// Replaces with Regex parts in the txt
+        /// Regex replaces specific parts in the string
         /// </summary>
-        /// <param name="kms"></param>
-        /// <returns></returns>
-        static private string ReplaceParts(string kms)
+        /// <param name="text"></param>
+        /// <returns>
+        /// The string with replaced chars and symbols
+        /// </returns>
+        static private string ReplaceParts(string text)
         {
             Regex regex = new Regex("[\":\\n\\r\\b]");
-            return regex.Replace(kms, ";");
+            return regex.Replace(text, ";");
         }
     }
 }
